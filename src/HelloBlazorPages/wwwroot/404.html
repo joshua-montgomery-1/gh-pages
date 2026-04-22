@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        var basePath = '__BASE_PATH__';
+        var normalizedBasePath = basePath === '/' ? '' : basePath.replace(/\/$/, '');
+        var route = window.location.pathname.slice(normalizedBasePath.length);
+        var query = window.location.search.slice(1).replace(/&/g, '~and~');
+        var target = (normalizedBasePath || '') + '/?p=' + route + (query ? '&q=' + query : '') + window.location.hash;
+
+        window.location.replace(target);
+    </script>
+</head>
+<body></body>
+</html>

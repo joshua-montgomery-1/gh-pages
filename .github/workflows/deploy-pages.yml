@@ -1,0 +1,84 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore src/HelloBlazorPages/HelloBlazorPages.csproj
+
+      - name: Publish
+        run: dotnet publish src/HelloBlazorPages/HelloBlazorPages.csproj --configuration Release --output publish
+
+      - name: Prepare Pages artifact
+        shell: pwsh
+        run: |
+          $sitePath = Join-Path $PWD 'site'
+          $publishWwwroot = Join-Path $PWD 'publish/wwwroot'
+          New-Item -ItemType Directory -Force -Path $sitePath | Out-Null
+          Copy-Item -Path (Join-Path $publishWwwroot '*') -Destination $sitePath -Recurse -Force
+
+          $repositoryName = "${{ github.event.repository.name }}"
+          if ($repositoryName -like '*.github.io') {
+            $baseHref = '/'
+          }
+          else {
+            $baseHref = "/$repositoryName/"
+          }
+
+          $indexPath = Join-Path $sitePath 'index.html'
+          $indexContents = Get-Content -Path $indexPath -Raw
+          $indexContents = $indexContents.Replace('<base href="/" />', "<base href=`"$baseHref`" />")
+          Set-Content -Path $indexPath -Value $indexContents -NoNewline
+
+          $notFoundPath = Join-Path $sitePath '404.html'
+          $notFoundContents = Get-Content -Path $notFoundPath -Raw
+          $notFoundContents = $notFoundContents.Replace('__BASE_PATH__', $baseHref)
+          Set-Content -Path $notFoundPath -Value $notFoundContents -NoNewline
+
+          $noJekyllPath = Join-Path $sitePath '.nojekyll'
+          New-Item -ItemType File -Path $noJekyllPath -Force | Out-Null
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
