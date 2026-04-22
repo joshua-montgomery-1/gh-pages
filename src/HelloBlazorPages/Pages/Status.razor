@@ -1,13 +1,53 @@
 @page "/status"
 
-<PageTitle>Route Test</PageTitle>
+<PageTitle>Route Check</PageTitle>
 
-<section class="panel route-proof">
-    <p class="eyebrow">Client-side routing check</p>
-    <h1>Routing survived GitHub Pages.</h1>
-    <p>
-        If you refreshed this page directly after deployment and still landed here, the SPA fallback is
-        doing its job.
-    </p>
-    <a class="button primary" href="">Back home</a>
-</section>
+<MudGrid Spacing="3">
+    <MudItem xs="12" md="7">
+        <MudPaper Class="content-card">
+            <MudChip T="string" Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">Route reachable</MudChip>
+            <MudText Typo="Typo.h4" Class="mt-4">GitHub Pages SPA fallback is the thing this page proves.</MudText>
+            <MudText Typo="Typo.body1" Class="mt-2">
+                If you can land on <code>/status</code> after a browser refresh in production, the custom
+                <code>404.html</code> redirect and the query-string restore script are both working.
+            </MudText>
+
+            <MudDivider Class="my-4" />
+
+            <MudSimpleTable Dense="true" Hover="true">
+                <thead>
+                    <tr>
+                        <th>Check</th>
+                        <th>Why it matters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Custom `404.html`</td>
+                        <td>Turns direct route hits into a safe redirect back to the Blazor entry page.</td>
+                    </tr>
+                    <tr>
+                        <td>Query-string restore script</td>
+                        <td>Reconstructs the original route before Blazor boots.</td>
+                    </tr>
+                    <tr>
+                        <td>Base href rewrite</td>
+                        <td>Ensures project pages work under `/{repo-name}/` instead of the web root.</td>
+                    </tr>
+                </tbody>
+            </MudSimpleTable>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" md="5">
+        <MudPaper Class="content-card accent-card">
+            <MudText Typo="Typo.h6">Quick next step</MudText>
+            <MudText Typo="Typo.body2" Class="mb-4">
+                Push this branch, enable GitHub Pages to use GitHub Actions, and then test both `/` and `/status` after deployment.
+            </MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/" FullWidth="true" StartIcon="@Icons.Material.Filled.ArrowBack">
+                Back to dashboard
+            </MudButton>
+        </MudPaper>
+    </MudItem>
+</MudGrid>

@@ -1,17 +1,22 @@
 # Hello Blazor Pages
 
-This repository is a small, template-friendly starter for hosting a standalone Blazor WebAssembly app on GitHub Pages.
+This repository is a small, template-friendly starter for hosting a standalone Blazor WebAssembly app on GitHub Pages with MudBlazor.
 
 It intentionally keeps the app simple:
 
 - `src/HelloBlazorPages` contains the Blazor WebAssembly app.
 - `tests/HelloBlazorPages.Tests` contains a starter test project wired into the solution.
+- The UI shell uses MudBlazor with a responsive app bar, drawer, and dashboard-style landing page.
 - `.github/workflows/ci.yml` runs restore, build, and test on pushes and pull requests.
 - `.github/workflows/deploy-pages.yml` publishes the app and deploys it to GitHub Pages.
 
 ## Why this is different from the Microsoft sample
 
-This repo borrows the GitHub Pages hosting idea from the Blazor samples, but it is not named the same and it does not reproduce the Xref Generator app. The goal here is to give you a clean "hello world" style starting point that can become your own template repository.
+This repo borrows the GitHub Pages hosting idea from the Blazor samples, but it is not named the same and it does not reproduce the Xref Generator app. The goal here is to give you a clean starter that proves three things together:
+
+- standalone Blazor WebAssembly hosting on GitHub Pages
+- a modern `/src` and `/tests` repository layout
+- MudBlazor installed and ready with a dashboard-style shell
 
 ## Repository layout
 
@@ -35,6 +40,16 @@ The GitHub Pages workflow does four important things:
 2. Rewrites the `<base href>` to match the repository name for project Pages sites.
 3. Ships a `404.html` SPA fallback so client-side routes still resolve after refresh.
 4. Uploads the prepared static site to GitHub Pages.
+
+## MudBlazor setup
+
+The app follows MudBlazor's standard standalone WebAssembly installation shape:
+
+- `MudBlazor` NuGet package referenced by the app project.
+- `builder.Services.AddMudServices()` in `Program.cs`.
+- `@using MudBlazor` in `_Imports.razor`.
+- `MudThemeProvider`, `MudPopoverProvider`, `MudDialogProvider`, and `MudSnackbarProvider` in the main layout.
+- MudBlazor CSS and JS referenced in `wwwroot/index.html`.
 
 For a repository like `https://github.com/your-name/your-repo`, the deployed base path becomes `/your-repo/`.
 
@@ -66,5 +81,5 @@ dotnet test gh-pages.slnx
 
 - Rename `HelloBlazorPages` to your preferred app name.
 - Update the solution filename if you want a cleaner repo-specific name.
-- Replace the home page content with your real site.
+- Replace the dashboard demo content with your real site.
 - Keep the deployment workflow unless you move away from GitHub Pages.

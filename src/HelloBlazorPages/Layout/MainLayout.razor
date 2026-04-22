@@ -1,3 +1,84 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
-@Body
+<MudThemeProvider Theme="_theme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1" Color="Color.Surface" Dense="true">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer" />
+        <MudText Typo="Typo.h6" Class="app-title">Hello Blazor Pages</MudText>
+        <MudSpacer />
+        <MudChip T="string" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">GitHub Pages</MudChip>
+        <MudIconButton Icon="@Icons.Material.Filled.Code" Color="Color.Inherit" Href="https://github.com/joshu/gh-pages" Target="_blank" />
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="_drawerOpen"
+               ClipMode="DrawerClipMode.Docked"
+               Elevation="1"
+               Variant="DrawerVariant.Responsive"
+               Breakpoint="Breakpoint.Md"
+               Class="app-drawer">
+        <MudDrawerHeader Class="drawer-header">
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.overline" Class="drawer-kicker">Template Starter</MudText>
+                <MudText Typo="Typo.h6">Dashboard Shell</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">MudBlazor + Blazor WebAssembly</MudText>
+            </MudStack>
+        </MudDrawerHeader>
+
+        <MudNavMenu Rounded="true" Dense="true" Margin="Margin.Dense" Color="Color.Primary" Class="px-3">
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+            <MudNavLink Href="/status" Icon="@Icons.Material.Filled.Route">Route Check</MudNavLink>
+            <MudNavGroup Title="Template Notes" Icon="@Icons.Material.Filled.Inventory2" Expanded="true">
+                <MudNavLink Href="/" Icon="@Icons.Material.Filled.Widgets">MudBlazor shell</MudNavLink>
+                <MudNavLink Href="/status" Icon="@Icons.Material.Filled.CloudDone">Pages fallback</MudNavLink>
+            </MudNavGroup>
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent Class="app-main">
+        <MudContainer MaxWidth="MaxWidth.False" Class="pa-6">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool _drawerOpen = true;
+
+    private readonly MudTheme _theme = new()
+    {
+        PaletteLight = new PaletteLight
+        {
+            Primary = "#2952cc",
+            Secondary = "#4f5d75",
+            Tertiary = "#f6c85f",
+            Background = "#f4f7fb",
+            Surface = "#ffffff",
+            DrawerBackground = "#ffffff",
+            DrawerText = "#1f2a44",
+            AppbarBackground = "#ffffff",
+            AppbarText = "#1f2a44",
+            TextPrimary = "#1f2a44",
+            TextSecondary = "#5b6885"
+        },
+        LayoutProperties = new LayoutProperties
+        {
+            DefaultBorderRadius = "16px"
+        },
+        Typography = new Typography
+        {
+            Default = new DefaultTypography
+            {
+                FontFamily = ["Roboto", "Segoe UI", "sans-serif"]
+            }
+        }
+    };
+
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}

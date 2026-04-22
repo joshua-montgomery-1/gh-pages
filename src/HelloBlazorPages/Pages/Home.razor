@@ -1,42 +1,88 @@
 @page "/"
 
-<PageTitle>Hello Blazor Pages</PageTitle>
+<PageTitle>Dashboard</PageTitle>
 
-<section class="hero">
-    <p class="eyebrow">Blazor WebAssembly on GitHub Pages</p>
-    <h1>Hello from a template-friendly starter.</h1>
-    <p class="lead">
-        This project keeps the app intentionally small so you can verify GitHub Pages hosting first,
-        then evolve it into a real site without unpicking sample-specific logic.
-    </p>
-    <div class="actions">
-        <a class="button primary" href="status">Open the route test</a>
-        <a class="button secondary" href="https://github.com/dotnet/blazor-samples" target="_blank" rel="noreferrer">See the Blazor samples repo</a>
-    </div>
-</section>
+<MudGrid Spacing="3">
+    <MudItem xs="12">
+        <MudPaper Class="hero-panel">
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="hero-stack">
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.overline" Class="section-kicker">MudBlazor starter</MudText>
+                    <MudText Typo="Typo.h3">Hello world, now in dashboard form.</MudText>
+                    <MudText Typo="Typo.body1" Class="hero-copy">
+                        This starter keeps the GitHub Pages plumbing from the earlier prototype, but swaps in the
+                        MudBlazor install pattern and a dashboard-style layout so the repo feels like a real template.
+                    </MudText>
+                    <MudStack Row="true" Spacing="2">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/status" StartIcon="@Icons.Material.Filled.RocketLaunch">
+                            Validate route fallback
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="https://www.mudblazor.com/getting-started/layouts#navigation-menu" Target="_blank">
+                            Layout inspiration
+                        </MudButton>
+                    </MudStack>
+                </MudStack>
+                <MudPaper Class="hero-badge" Elevation="0">
+                    <MudIcon Icon="@Icons.Material.Filled.DashboardCustomize" Size="Size.Large" Color="Color.Primary" />
+                    <MudText Typo="Typo.subtitle1">Ready for template reuse</MudText>
+                    <MudText Typo="Typo.body2">Rename the project, keep the shell.</MudText>
+                </MudPaper>
+            </MudStack>
+        </MudPaper>
+    </MudItem>
 
-<section class="panel-grid">
-    <article class="panel">
-        <h2>Why this repo exists</h2>
-        <p>
-            It proves a standalone Blazor WebAssembly app can build, test, and deploy to GitHub Pages
-            from a modern repository layout with <code>/src</code> and <code>/tests</code>.
-        </p>
-    </article>
+    <MudItem xs="12" sm="6" lg="3">
+        <MudPaper Class="metric-card">
+            <MudText Typo="Typo.overline" Class="metric-label">UI stack</MudText>
+            <MudText Typo="Typo.h4">MudBlazor</MudText>
+            <MudText Typo="Typo.body2">Package, theme providers, nav drawer, cards, and buttons are wired in.</MudText>
+        </MudPaper>
+    </MudItem>
 
-    <article class="panel">
-        <h2>What makes Pages work</h2>
-        <p>
-            The deployment workflow publishes the app, rewrites the base path for the repository name,
-            adds a SPA fallback, and uploads the final static site artifact to GitHub Pages.
-        </p>
-    </article>
+    <MudItem xs="12" sm="6" lg="3">
+        <MudPaper Class="metric-card">
+            <MudText Typo="Typo.overline" Class="metric-label">Hosting target</MudText>
+            <MudText Typo="Typo.h4">GitHub Pages</MudText>
+            <MudText Typo="Typo.body2">Base path rewriting and SPA fallback stay in place for refresh-safe routing.</MudText>
+        </MudPaper>
+    </MudItem>
 
-    <article class="panel">
-        <h2>How to turn this into your template</h2>
-        <p>
-            Rename the solution and project, keep the deployment workflow, and replace this page with
-            your real content when you are ready.
-        </p>
-    </article>
-</section>
+    <MudItem xs="12" sm="6" lg="3">
+        <MudPaper Class="metric-card">
+            <MudText Typo="Typo.overline" Class="metric-label">Repo layout</MudText>
+            <MudText Typo="Typo.h4">/src + /tests</MudText>
+            <MudText Typo="Typo.body2">The solution keeps a template-friendly separation between app code and tests.</MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" lg="3">
+        <MudPaper Class="metric-card">
+            <MudText Typo="Typo.overline" Class="metric-label">Deployment</MudText>
+            <MudText Typo="Typo.h4">Actions</MudText>
+            <MudText Typo="Typo.body2">CI and Pages workflows are ready to publish once the repo Pages source is set to Actions.</MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" lg="8">
+        <MudPaper Class="content-card">
+            <MudText Typo="Typo.h5" GutterBottom="true">Template checklist</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem Text="Rename HelloBlazorPages to your app or template name." Icon="@Icons.Material.Filled.DriveFileRenameOutline" />
+                <MudListItem Text="Replace the demo dashboard cards with your actual content." Icon="@Icons.Material.Filled.ViewQuilt" />
+                <MudListItem Text="Keep the Pages workflow unless you move to another static host." Icon="@Icons.Material.Filled.CloudUpload" />
+                <MudListItem Text="Expand the test project once you add real components or services." Icon="@Icons.Material.Filled.Verified" />
+            </MudList>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <MudPaper Class="content-card">
+            <MudText Typo="Typo.h5" GutterBottom="true">What changed</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem Text="MudBlazor package and services added" Icon="@Icons.Material.Filled.CheckCircle" />
+                <MudListItem Text="Dashboard layout and drawer navigation added" Icon="@Icons.Material.Filled.CheckCircle" />
+                <MudListItem Text="Pages base path and fallback kept intact" Icon="@Icons.Material.Filled.CheckCircle" />
+            </MudList>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
